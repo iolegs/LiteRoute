@@ -89,6 +89,18 @@ public enum TransitionStyle {
 
 public extension TransitionHandler where Self: UIViewController {
 	
+    /// Implementation for destination as ViewController transition
+    func forDestination<T>(_ destination: UIViewController, to type: T.Type) -> TransitionNode<T> {
+        let node = TransitionNode(root: self, destination: destination, for: type)
+        
+        // Default transition action.
+        node.postLinkAction { [unowned self, unowned node] in
+            self.present(destination, animated: node.isAnimated, completion: nil)
+        }
+        
+        return node
+    }
+    
 	/// Implementation for current storyboard transition
 	func forCurrentStoryboard<T>(restorationId: String, to type: T.Type) throws -> TransitionNode<T> {
 		guard let storyboard = self.storyboard else { throw LiteRouteError.storyboardWasNil }

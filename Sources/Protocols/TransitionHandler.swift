@@ -29,6 +29,13 @@ import Foundation
 /// This protocol describe how do transition beetwen ViewControllers.
 public protocol TransitionHandler: class {
     
+    /// The method of initiating the transition for ViewController, which depends on the root view controller.
+    /// - Parameters:
+    ///   - destination: ViewController to present
+    ///   - type: The argument which checks the specified type and controller type for compatibility, and returns this type in case of success.
+    /// - Returns: Transition node instance with setups.
+    func forDestination<T>(_ destination: UIViewController, to type: T.Type) -> TransitionNode<T>
+    
     ///
     /// The method of initiating the transition in the current storyboard, which depends on the root view controller.
     ///
